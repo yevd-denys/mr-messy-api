@@ -1,4 +1,4 @@
-package com.mrmessy.messyger.interfaces;
+package com.mrmessy.messynger.interfaces;
 
 import graphql.schema.DataFetchingEnvironment;
 

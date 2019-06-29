@@ -1,4 +1,4 @@
-package com.mrmessy.messyger.components;
+package com.mrmessy.messynger.components;
 
 import com.google.common.collect.ImmutableMap;
 import graphql.schema.DataFetcher;
