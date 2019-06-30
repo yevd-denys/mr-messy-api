@@ -1,6 +1,6 @@
-package com.mrmessy.messynger.entities;
+package com.mrmessy.messenger.entities;
 
-import com.mrmessy.messynger.enums.UserRole;
+import com.mrmessy.messenger.enums.UserRole;
 import lombok.Data;
 
 import javax.persistence.Column;

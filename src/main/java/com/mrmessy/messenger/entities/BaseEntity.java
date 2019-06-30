@@ -1,4 +1,4 @@
-package com.mrmessy.messynger.entities;
+package com.mrmessy.messenger.entities;
 
 import lombok.Data;
 
