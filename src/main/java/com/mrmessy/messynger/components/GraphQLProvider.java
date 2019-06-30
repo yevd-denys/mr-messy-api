@@ -1,4 +1,4 @@
-package com.mrmessy.messyger.components;
+package com.mrmessy.messynger.components;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
@@ -50,7 +50,7 @@ public class GraphQLProvider {
     private RuntimeWiring buildWiring() {
         return RuntimeWiring.newRuntimeWiring()
                 .type(newTypeWiring("Query")
-                        .dataFetcher("userById", graphQLDataFetchers.getUserDataFetcher()))
+                .dataFetcher("userById", graphQLDataFetchers.getUserDataFetcher()))
                 .build();
     }
 }

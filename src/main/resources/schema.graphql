@@ -1,10 +1,17 @@
 type Query {
-  userById(id: ID): User
+  userById(id: Int): User
 }
 
 type User {
-  id: ID
+  id: Int
   firstName: String
   lastName: String
+  email: String
+  role: UserRole
+  password: String
 }
 
+enum UserRole {
+  ADMIN,
+  USER,
+}
