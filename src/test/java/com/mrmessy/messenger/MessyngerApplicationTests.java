@@ -1,4 +1,4 @@
-package com.mrmessy.messynger;
+package com.mrmessy.messenger;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
