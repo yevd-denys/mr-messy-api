@@ -1,13 +1,13 @@
-package com.mrmessy.messyger;
+package com.mrmessy.messenger;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MessygerApplication {
+public class MessyngerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MessygerApplication.class, args);
+		SpringApplication.run(MessyngerApplication.class, args);
 	}
 
 }
