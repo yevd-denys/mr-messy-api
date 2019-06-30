@@ -5,8 +5,8 @@ import com.mrmessy.messenger.utils.ConverterUtils;
 import graphql.language.IntValue;
 import graphql.schema.Coercing;
 import graphql.schema.GraphQLInputType;
+import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLOutputType;
-import graphql.schema.GraphQLScalarType;
 import io.leangen.geantyref.GenericTypeReflector;
 import io.leangen.graphql.generator.BuildContext;
 import io.leangen.graphql.generator.OperationMapper;
@@ -18,23 +18,32 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.mrmessy.messenger.graphql.types.GraphQLCustomEnumType.createGraphQLCustomEnumType;
+import static graphql.schema.GraphQLScalarType.newScalar;
+
 public class CustomEnumMapper implements TypeMapper {
-    private final Map<String, GraphQLCustomEnumType> typeGraphQLObjectTypeMap = new ConcurrentHashMap<>();
+    private final Map<String, GraphQLObjectType> typeGraphQLObjectTypeMap = new ConcurrentHashMap<>();
     private final Map<String, GraphQLInputType> inputTypeMap = new ConcurrentHashMap<>();
 
     @Override
-    public GraphQLOutputType toGraphQLType(AnnotatedType javaType, OperationMapper operationMapper, Set<Class<? extends TypeMapper>> mappersToSkip, BuildContext buildContext) {
+    public GraphQLOutputType toGraphQLType(AnnotatedType javaType,
+                                           OperationMapper operationMapper,
+                                           Set<Class<? extends TypeMapper>> mappersToSkip,
+                                           BuildContext buildContext) {
         Class<?> clazz = ClassUtils.getRawType(javaType.getType());
         String enumName = clazz.getSimpleName();
-        return typeGraphQLObjectTypeMap.computeIfAbsent(enumName, s -> new GraphQLCustomEnumType(clazz));
+        return typeGraphQLObjectTypeMap.computeIfAbsent(enumName, s -> createGraphQLCustomEnumType(clazz));
 
     }
 
     @Override
-    public GraphQLInputType toGraphQLInputType(AnnotatedType javaType, OperationMapper operationMapper, Set<Class<? extends TypeMapper>> mappersToSkip, BuildContext buildContext) {
+    public GraphQLInputType toGraphQLInputType(AnnotatedType javaType,
+                                               OperationMapper operationMapper,
+                                               Set<Class<? extends TypeMapper>> mappersToSkip,
+                                               BuildContext buildContext) {
         Class<?> clazz = ClassUtils.getRawType(javaType.getType());
         String enumName = "Input" + clazz.getSimpleName();
-        return inputTypeMap.computeIfAbsent(enumName, s -> new GraphQLScalarType(enumName, "", new DataCoercing(clazz)));
+        return inputTypeMap.computeIfAbsent(enumName, s -> newScalar().name(enumName).coercing(new DataCoercing(clazz)).build());
     }
 
     @Override

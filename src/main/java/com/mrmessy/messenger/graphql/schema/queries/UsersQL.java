@@ -15,7 +15,6 @@ import static java.util.Objects.nonNull;
 import static org.apache.logging.log4j.util.Strings.isNotBlank;
 
 @Component
-@SuppressWarnings("unused")
 public class UsersQL {
 
     private final UserService userService;
