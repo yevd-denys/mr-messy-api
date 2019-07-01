@@ -11,6 +11,8 @@ spring:
         format_sql: true
         default_schema: public
         enable_lazy_load_no_trans: true
+        temp:
+          use_jdbc_metadata_defaults: false
 
   datasource:
     url: jdbc:postgresql://localhost:5432/MMD
