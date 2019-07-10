@@ -11,7 +11,7 @@ import javax.persistence.Converter;
 @Getter
 public enum UserRole implements INameable {
     ADMIN(0, "Admin"),
-    User(1, "User");
+    USER(1, "USER");
 
     private final Integer id;
     private final String name;
@@ -27,7 +27,7 @@ public enum UserRole implements INameable {
     }
 
     public static UserRole getById(Integer id) {
-        return ConverterUtils.findById(values(), id);
+        return ConverterUtils.findById(values(), id, USER);
     }
 
     @Converter(autoApply = true)

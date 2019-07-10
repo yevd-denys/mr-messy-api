@@ -2,6 +2,8 @@ package com.mrmessy.messenger.services;
 
 
 import com.mrmessy.messenger.entities.User;
+import com.mrmessy.messenger.graphql.dto.UserMutationDto;
+import com.mrmessy.messenger.mappers.UserMapper;
 import com.mrmessy.messenger.repos.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,23 +19,33 @@ public class UserService {
 
     private final UserRepo userRepo;
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return userRepo.findAll();
     }
 
-    public Optional<User> getById(Integer id){
+    public Optional<User> getById(Integer id) {
         return userRepo.findById(id);
     }
 
-    public Optional<User> getByEmail(String email){
+    public Optional<User> getByEmail(String email) {
         return userRepo.findByEmail(email);
     }
 
-    public User save(User user){
-        return userRepo.save(user);
+    public User save(UserMutationDto dto) {
+        var newUser = UserMapper.convert(dto);
+        return userRepo.save(newUser);
     }
 
-    public void delete(Integer id){
+    public User update(UserMutationDto dto) {
+        var current = userRepo.findById(dto.getId());
+        if (current.isPresent()) {
+            var updatedUser = UserMapper.convert(current.get(), dto);
+            return userRepo.save(updatedUser);
+        }
+        return null;
+    }
+
+    public void delete(Integer id) {
         userRepo.deleteById(id);
     }
 }
