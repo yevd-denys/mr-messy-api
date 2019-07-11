@@ -2,8 +2,10 @@ package com.mrmessy.messenger.graphql.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mrmessy.messenger.config.ApplicationConfiguration;
+import com.mrmessy.messenger.graphql.schema.mutations.UsersMutationQL;
 import com.mrmessy.messenger.graphql.types.CustomEnumMapper;
 import graphql.GraphQL;
+import graphql.execution.AsyncExecutionStrategy;
 import graphql.schema.GraphQLSchema;
 import io.leangen.graphql.GraphQLSchemaGenerator;
 import io.leangen.graphql.generator.mapping.common.MapToListTypeAdapter;
@@ -21,7 +23,7 @@ import org.springframework.context.annotation.Lazy;
 public class SchemaConfig {
 
     private final Query query;
-//    private final Mutation mutation;
+    private final UsersMutationQL usersMutationQL;
     private final ObjectMapper objectMapper;
 
     @Bean
@@ -29,16 +31,16 @@ public class SchemaConfig {
     public GraphQL graphQL() {
         GraphQLSchema schema = new GraphQLSchemaGenerator()
                 .withOperationsFromSingleton(query)
-//                .withOperationsFromSingleton(mutation)
+                .withOperationsFromSingleton(usersMutationQL, UsersMutationQL.class)
                 .withValueMapperFactory(JacksonValueMapperFactory.builder().withPrototype(objectMapper).build())
                 .withInterfaceMappingStrategy(new AnnotatedInterfaceStrategy(true))
                 .withTypeMappers(new CustomEnumMapper(), new MapToListTypeAdapter())
                 .generate();
 
-//        final AsyncExecutionStrategy strategy = new AsyncExecutionStrategy(new CustomDataFetcherExceptionHandler());
+        final AsyncExecutionStrategy strategy = new AsyncExecutionStrategy(new CustomDataFetcherExceptionHandler());
         return GraphQL.newGraphQL(schema)
-//                .queryExecutionStrategy(strategy)
-//                .mutationExecutionStrategy(strategy)
+                .queryExecutionStrategy(strategy)
+                .mutationExecutionStrategy(strategy)
                 .build();
     }
 
